@@ -2,7 +2,12 @@ name: Main
 
 on:
   push:
-    branches: ['main']
+    branches: [main]
+
+permissions:
+  actions: write
+  packages: write
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,26 +25,26 @@ jobs:
         uses: hadolint/hadolint-action@v3.1.0
 
   build:
-    uses: Ilyes512/github-actions/.github/workflows/build.yml@0.2.2
+    name: Build
+    uses: Ilyes512/github-actions/.github/workflows/build.yml@1.0.4
     needs: linting
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
+        runs-on:
+          - os: ubuntu-24.04
+            platform: linux/amd64
+          - os: ubuntu-24.04-arm
+            platform: linux/arm64
     with:
-      runner-os: ubuntu-24.04
-      platform: ${{ matrix.platform }}
+      runs-on: ${{ matrix.runs-on.os }}
+      platform: ${{ matrix.runs-on.platform }}
       image-name: ghcr.io/${{ github.repository }}
-      cache-key: ${{ matrix.os }}-buildx-${{ matrix.platform }}-${{ github.ref_name }}-${{ github.sha }}
-      cache-restore-keys: |
-        ${{ matrix.os }}-buildx-${{ matrix.platform }}-${{ github.ref_name }}-
-        ${{ matrix.os }}-buildx-${{ matrix.platform }}-
 
   merge:
-    uses: Ilyes512/github-actions/.github/workflows/merge.yml@0.2.2
+    name: Merge
+    uses: Ilyes512/github-actions/.github/workflows/merge.yml@1.0.4
     needs: build
     with:
+      runs-on: ubuntu-24.04
       image-name: ghcr.io/${{ github.repository }}
-      runner-os: ubuntu-24.04
