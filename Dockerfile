@@ -1,5 +1,5 @@
 # Latest version of Debian image: https://hub.docker.com/_/debian
-FROM debian:12.11-slim AS builder
+FROM debian:13.0-slim AS builder
 
 ARG UNIQUE_ID_FOR_CACHEFROM=builder
 
@@ -27,7 +27,7 @@ COPY requirements.txt /ansible/requirements.txt
 
 RUN python3 -m pip install --no-cache-dir --progress-bar off --requirement /ansible/requirements.txt
 
-FROM debian:12.11-slim AS ansible
+FROM debian:13.0-slim AS ansible
 
 ARG UNIQUE_ID_FOR_CACHEFROM=ansible
 
@@ -46,12 +46,11 @@ RUN chmod 777 -R "$HOME" \
         git \
         openssh-client \
         python3 \
-        python3-distutils \
+        python3-setuptools \
         jq \
         # deps for docker-ce-cli
         gnupg \
         lsb-release \
-        software-properties-common \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor - > /usr/share/keyrings/docker.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker-ce.list \
     && apt-get update \
@@ -61,7 +60,6 @@ RUN chmod 777 -R "$HOME" \
     && apt-get purge --assume-yes \
         gnupg \
         lsb-release \
-        software-properties-common \
     && apt-get autoremove --assume-yes \
     && apt-get clean --assume-yes \
     && rm -rf /var/lib/apt/lists/* \
