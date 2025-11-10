@@ -43,7 +43,7 @@ jobs:
 
   merge:
     name: Merge
-    uses: Ilyes512/github-actions/.github/workflows/merge.yml@1.0.4
+    uses: Ilyes512/github-actions/.github/workflows/merge.yml@1.0.5
     needs: build
     with:
       runs-on: ubuntu-24.04
