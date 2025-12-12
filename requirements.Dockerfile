@@ -1,4 +1,6 @@
-FROM debian:13.0-slim AS builder
+ARG DEBIAN_VERSION=13.2-slim
+
+FROM debian:${DEBIAN_VERSION} AS builder
 
 ARG UNIQUE_ID_FOR_CACHEFROM=builder
 
