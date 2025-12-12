@@ -10,7 +10,8 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
         build-essential \
         gcc \
-        python3-full \
+        python3 \
+        python3-venv \
     && python3 -m venv /opt/venv \
     && apt-get autoremove --assume-yes \
     && apt-get clean --assume-yes \
