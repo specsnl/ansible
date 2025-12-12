@@ -7,7 +7,7 @@ vars:
   DOCKER_OWNER: ilyes512
   DOCKER_IMAGE_NAME: ansible
   # Latatest version of Hadolint: https://hub.docker.com/r/hadolint/hadolint/tags or https://github.com/hadolint/hadolint/releases
-  HADOLINT_TAG_VERSION: v2.12.0
+  HADOLINT_TAG_VERSION: v2.14.0
   # Latatest version of utils: https://github.com/Ilyes512/utils/pkgs/container/utils or https://github.com/Ilyes512/utils/releases
   UTILS_TAG_VERSION: 1.9.0
 
