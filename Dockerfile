@@ -50,8 +50,9 @@ RUN chmod 777 -R "$HOME" \
         python3 \
         python3-setuptools \
         jq \
-        # deps for docker-ce-cli
         gnupg \
+        pass \
+        # deps for docker-ce-cli
         lsb-release \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor - > /usr/share/keyrings/docker.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker-ce.list \
@@ -60,7 +61,6 @@ RUN chmod 777 -R "$HOME" \
     # Ansible requires the running user to have a passwd entry
     && for i in $(seq 500 1999); do echo "user:x:$i:$i::/home:/sbin/nologin"; done >> /etc/passwd \
     && apt-get purge --assume-yes \
-        gnupg \
         lsb-release \
     && apt-get autoremove --assume-yes \
     && apt-get clean --assume-yes \
