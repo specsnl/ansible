@@ -1,5 +1,7 @@
 # Latest version of Debian image: https://hub.docker.com/_/debian
-FROM debian:13.0-slim AS builder
+ARG DEBIAN_VERSION=13.2-slim
+
+FROM debian:${DEBIAN_VERSION} AS builder
 
 ARG UNIQUE_ID_FOR_CACHEFROM=builder
 
@@ -9,7 +11,8 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
         build-essential \
         gcc \
-        python3-full \
+        python3 \
+        python3-venv \
     && python3 -m venv /opt/venv \
     && apt-get autoremove --assume-yes \
     && apt-get clean --assume-yes \
@@ -27,7 +30,7 @@ COPY requirements.txt /ansible/requirements.txt
 
 RUN python3 -m pip install --no-cache-dir --progress-bar off --requirement /ansible/requirements.txt
 
-FROM debian:13.0-slim AS ansible
+FROM debian:${DEBIAN_VERSION} AS ansible
 
 ARG UNIQUE_ID_FOR_CACHEFROM=ansible
 
@@ -46,10 +49,14 @@ RUN chmod 777 -R "$HOME" \
         git \
         openssh-client \
         python3 \
-        python3-setuptools \
         jq \
-        # deps for docker-ce-cli
         gnupg \
+        pass \
+        rsync \
+        sshpass \
+        sudo \
+        unzip \
+        # deps for docker-ce-cli
         lsb-release \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor - > /usr/share/keyrings/docker.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker-ce.list \
@@ -58,7 +65,6 @@ RUN chmod 777 -R "$HOME" \
     # Ansible requires the running user to have a passwd entry
     && for i in $(seq 500 1999); do echo "user:x:$i:$i::/home:/sbin/nologin"; done >> /etc/passwd \
     && apt-get purge --assume-yes \
-        gnupg \
         lsb-release \
     && apt-get autoremove --assume-yes \
     && apt-get clean --assume-yes \
@@ -82,8 +88,8 @@ ARG KUBECTX_VERSION=v0.9.5
 ARG KUBECTX_SHA256=a2247ffd23e79f89abdd0e8173379d7172511f02a3f63c9936d3824e0dd60648
 ARG KUBENS_SHA256=acc1a9c7f6b722fbe5fad25dd0e784a7335d18436b9c414ab996629e82702cba
 # Latest version of Helm at the moment: https://api.github.com/repos/helm/helm/releases/latest
-ARG HELM_VERSION=v3.18.5
-ARG HELM_SHA256=9879bf9c471cdecbbee5ee17cf1de1849b0ffd12871ea01f17ede6861d7134f5
+ARG HELM_VERSION=v4.0.4
+ARG HELM_SHA256=29454bc351f4433e66c00f5d37841627cbbcc02e4c70a6d796529d355237671c
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

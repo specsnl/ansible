@@ -1,6 +1,6 @@
 # ansible
 
-[![Build Images](https://github.com/Ilyes512/ansible/workflows/Build%20Images/badge.svg)](https://github.com/Ilyes512/ansible/actions?query=workflow%3A%22Build+Images%22)
+[![Build Images](https://github.com/Ilyes512/ansible/workflows/main.yml/badge.svg)](https://github.com/Ilyes512/ansible/actions/workflows/main.yml)
 
 Multiple Ansible images with different kind of tools ready for K8s interactions.
 

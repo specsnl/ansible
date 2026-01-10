@@ -1,4 +1,6 @@
-FROM debian:13.0-slim AS builder
+ARG DEBIAN_VERSION=13.2-slim
+
+FROM debian:${DEBIAN_VERSION} AS builder
 
 ARG UNIQUE_ID_FOR_CACHEFROM=builder
 
@@ -8,7 +10,8 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
         build-essential \
         gcc \
-        python3-full \
+        python3 \
+        python3-venv \
     && python3 -m venv /opt/venv \
     && apt-get autoremove --assume-yes \
     && apt-get clean --assume-yes \
