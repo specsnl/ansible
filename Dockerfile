@@ -52,6 +52,10 @@ RUN chmod 777 -R "$HOME" \
         jq \
         gnupg \
         pass \
+        rsync \
+        sshpass \
+        sudo \
+        unzip \
         # deps for docker-ce-cli
         lsb-release \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor - > /usr/share/keyrings/docker.gpg \
