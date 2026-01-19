@@ -25,7 +25,7 @@ jobs:
 
   build:
     name: Build
-    uses: Ilyes512/github-actions/.github/workflows/build.yml@1.0.5
+    uses: Ilyes512/github-actions/.github/workflows/build.yml@1.0.6
     needs: linting
     strategy:
       fail-fast: false
