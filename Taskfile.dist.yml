@@ -8,8 +8,8 @@ vars:
   DOCKER_IMAGE_NAME: ansible
   # Latatest version of Hadolint: https://hub.docker.com/r/hadolint/hadolint/tags or https://github.com/hadolint/hadolint/releases
   HADOLINT_TAG_VERSION: v2.14.0
-  # Latatest version of utils: https://github.com/Ilyes512/utils/pkgs/container/utils or https://github.com/Ilyes512/utils/releases
-  UTILS_TAG_VERSION: 1.10.0
+  # Latatest version of utils: https://github.com/specsnl/utils/pkgs/container/utils or https://github.com/specsnl/utils/releases
+  UTILS_TAG_VERSION: 1.11.4
 
 includes:
   scripts:
