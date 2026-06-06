@@ -1,5 +1,5 @@
 # Latest version of Debian image: https://hub.docker.com/_/debian
-ARG DEBIAN_VERSION=13.2-slim
+ARG DEBIAN_VERSION=13.5-slim
 
 FROM debian:${DEBIAN_VERSION} AS builder
 
@@ -84,12 +84,12 @@ ARG UNIQUE_ID_FOR_CACHEFROM=ansiblek8s
 ARG KUBECTL_VERSION=v1.31.0
 ARG KUBECTL_SHA256=7c27adc64a84d1c0cc3dcf7bf4b6e916cc00f3f576a2dbac51b318d926032437
 # Latest version of kubectx/kubens at the moment: https://api.github.com/repos/ahmetb/kubectx/releases/latest
-ARG KUBECTX_VERSION=v0.9.5
-ARG KUBECTX_SHA256=a2247ffd23e79f89abdd0e8173379d7172511f02a3f63c9936d3824e0dd60648
-ARG KUBENS_SHA256=acc1a9c7f6b722fbe5fad25dd0e784a7335d18436b9c414ab996629e82702cba
+ARG KUBECTX_VERSION=v0.11.0
+ARG KUBECTX_SHA256=08e031c54fbffb3f100e904e4eae94bba2730fedf4869921fda79e4d7a8f5d4c
+ARG KUBENS_SHA256=326c021c7b35468ed9a187b361198d0f22ae32828139c65eb6670c0d8301cc09
 # Latest version of Helm at the moment: https://api.github.com/repos/helm/helm/releases/latest
-ARG HELM_VERSION=v4.0.4
-ARG HELM_SHA256=29454bc351f4433e66c00f5d37841627cbbcc02e4c70a6d796529d355237671c
+ARG HELM_VERSION=v4.2.0
+ARG HELM_SHA256=97dbeb971be4ac4b27e3839976d9564c0fb35c6f3b1da89dd1e292d236af4096
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
