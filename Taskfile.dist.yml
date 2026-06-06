@@ -4,7 +4,7 @@ silent: true
 
 vars:
   DOCKER_REPO: ghcr.io
-  DOCKER_OWNER: ilyes512
+  DOCKER_OWNER: specsnl
   DOCKER_IMAGE_NAME: ansible
   # Latatest version of Hadolint: https://hub.docker.com/r/hadolint/hadolint/tags or https://github.com/hadolint/hadolint/releases
   HADOLINT_TAG_VERSION: v2.14.0
