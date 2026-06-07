@@ -7,8 +7,6 @@ FROM ghcr.io/astral-sh/uv:0.11.19 AS uv
 # Latest version: https://hub.docker.com/_/python/tags?name=3.14.5-alpine
 FROM python:3.14.5-alpine3.23 AS ansible
 
-ARG UNIQUE_ID_FOR_CACHEFROM=ansible
-
 ENV HOME=/home
 
 WORKDIR /ansible
@@ -45,20 +43,20 @@ ENV PATH="/ansible/.venv/bin:$PATH"
 
 FROM ansible AS k8s
 
-ARG UNIQUE_ID_FOR_CACHEFROM=ansiblek8s
-
 # Latest version of Kubectl at the moment: https://storage.googleapis.com/kubernetes-release/release/stable.txt
 ARG KUBECTL_VERSION=v1.31.0
 ARG KUBECTL_SHA256=7c27adc64a84d1c0cc3dcf7bf4b6e916cc00f3f576a2dbac51b318d926032437
+
 # Latest version of kubectx/kubens at the moment: https://api.github.com/repos/ahmetb/kubectx/releases/latest
 ARG KUBECTX_VERSION=v0.11.0
 ARG KUBECTX_SHA256=08e031c54fbffb3f100e904e4eae94bba2730fedf4869921fda79e4d7a8f5d4c
 ARG KUBENS_SHA256=326c021c7b35468ed9a187b361198d0f22ae32828139c65eb6670c0d8301cc09
+
 # Latest version of Helm at the moment: https://api.github.com/repos/helm/helm/releases/latest
 ARG HELM_VERSION=v4.2.0
 ARG HELM_SHA256=97dbeb971be4ac4b27e3839976d9564c0fb35c6f3b1da89dd1e292d236af4096
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
     # get kubectl
 RUN curl -fsSLo /usr/local/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl" \
