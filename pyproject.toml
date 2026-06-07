@@ -1,0 +1,26 @@
+[project]
+name = "ansible-env"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    # for better Ansible password_hash() support
+    "passlib",
+    "bcrypt",
+    # openshift is a requirement of the k8s Ansible module
+    "openshift",
+    # needed for Ansible k8s module's validate support
+    "kubernetes-validate",
+    # needed for Ansible dns lookup support
+    "dnspython",
+    # needed for Ansible ipaddr functions
+    "netaddr",
+    # needed for Ansible hashi_vault plugin support
+    "hvac",
+    # needed for Ansible docker
+    "docker",
+    # misc tooling
+    "ansible-lint",
+    "yamllint",
+    "molecule",
+    "ansible",
+]

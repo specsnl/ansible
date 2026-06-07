@@ -1,36 +1,11 @@
-# Latest version of Debian image: https://hub.docker.com/_/debian
-ARG DEBIAN_VERSION=13.5-slim
+# syntax=docker/dockerfile:1
+# check=error=true
 
-FROM debian:${DEBIAN_VERSION} AS builder
+# Latest version: https://github.com/astral-sh/uv/releases
+FROM ghcr.io/astral-sh/uv:0.11.19 AS uv
 
-ARG UNIQUE_ID_FOR_CACHEFROM=builder
-
-WORKDIR /ansible
-
-RUN apt-get update \
-    && apt-get install --assume-yes --no-install-recommends \
-        build-essential \
-        gcc \
-        python3 \
-        python3-venv \
-    && python3 -m venv /opt/venv \
-    && apt-get autoremove --assume-yes \
-    && apt-get clean --assume-yes \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/*
-
-ENV PATH="/opt/venv/bin:$PATH"
-
-RUN python3 -m pip install --upgrade --no-cache-dir --progress-bar off \
-        pip \
-        wheel \
-        setuptools
-
-COPY requirements.txt /ansible/requirements.txt
-
-RUN python3 -m pip install --no-cache-dir --progress-bar off --requirement /ansible/requirements.txt
-
-FROM debian:${DEBIAN_VERSION} AS ansible
+# Latest version: https://hub.docker.com/_/python/tags?name=3.14.5-alpine
+FROM python:3.14.5-alpine3.23 AS ansible
 
 ARG UNIQUE_ID_FOR_CACHEFROM=ansible
 
@@ -38,17 +13,19 @@ ENV HOME=/home
 
 WORKDIR /ansible
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+COPY --from=uv /uv /usr/local/bin/uv
 
-RUN chmod 777 -R "$HOME" \
-    && apt-get update \
-    && apt-get install --assume-yes --no-install-recommends \
-        ca-certificates \
+COPY pyproject.toml uv.lock ./
+
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+
+# hadolint ignore=DL3018
+RUN apk add --no-cache --no-progress \
+        bash \
         curl \
         openssl \
         git \
-        openssh-client \
-        python3 \
+        openssh-client-default \
         jq \
         gnupg \
         pass \
@@ -56,25 +33,15 @@ RUN chmod 777 -R "$HOME" \
         sshpass \
         sudo \
         unzip \
-        # deps for docker-ce-cli
-        lsb-release \
-    && curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor - > /usr/share/keyrings/docker.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker-ce.list \
-    && apt-get update \
-    && apt-get install --assume-yes --no-install-recommends docker-ce-cli \
-    # Ansible requires the running user to have a passwd entry
-    && for i in $(seq 500 1999); do echo "user:x:$i:$i::/home:/sbin/nologin"; done >> /etc/passwd \
-    && apt-get purge --assume-yes \
-        lsb-release \
-    && apt-get autoremove --assume-yes \
-    && apt-get clean --assume-yes \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/*
+        docker-cli \
+    && chmod 777 -R "$HOME" \
+    && seq 500 1999 | awk '{printf "user:x:%d:%d::/home:/sbin/nologin\n",$1,$1}' >> /etc/passwd \
+    && uv sync --frozen --no-dev \
+    && rm pyproject.toml uv.lock
 
 COPY files/ansible /
-COPY --from=builder /opt/venv /opt/venv
 
-ENV PATH="/opt/venv/bin:$PATH"
+ENV PATH="/ansible/.venv/bin:$PATH"
 
 FROM ansible AS k8s
 
