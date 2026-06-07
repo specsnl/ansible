@@ -24,13 +24,23 @@ includes:
 tasks:
   build:
     desc: Build both ansible and k8s images
+    deps:
+      - build:ansible
+      - build:k8s
+
+  build:ansible:
+    desc: Build the ansible image
     cmds:
       - docker build
         --tag {{.DOCKER_REPO}}/{{.DOCKER_OWNER}}/{{.DOCKER_IMAGE_NAME}}:latest
         --target ansible
         .
+
+  build:k8s:
+    desc: Build the k8s image
+    cmds:
       - docker build
-        --tag {{.DOCKER_REPO}}/{{.DOCKER_OWNER}}/{{.DOCKER_IMAGE_NAME}}:k8s-latest
+        --tag {{.DOCKER_REPO}}/{{.DOCKER_OWNER}}/{{.DOCKER_IMAGE_NAME}}/k8s:latest
         --target k8s
         .
 

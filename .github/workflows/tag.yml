@@ -26,8 +26,8 @@ jobs:
 
   build:
     name: Build
-    uses: specsnl/github-actions/.github/workflows/build.yml@1.2.3
     needs: linting
+    runs-on: ${{ matrix.runs-on.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -36,15 +36,56 @@ jobs:
             platform: linux/amd64
           - os: ubuntu-24.04-arm
             platform: linux/arm64
-    with:
-      runs-on: ${{ matrix.runs-on.os }}
-      platform: ${{ matrix.runs-on.platform }}
-      image-name: ghcr.io/${{ github.repository }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Log in to the Container registry
+        uses: docker/login-action@v4
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build and Push (ansible)
+        uses: specsnl/github-actions/build-target@1.2.3
+        with:
+          platform: ${{ matrix.runs-on.platform }}
+          image-name: ghcr.io/${{ github.repository }}
+          dockerfile: Dockerfile
+          target: ansible
+      - name: Build and Push (k8s)
+        uses: specsnl/github-actions/build-target@1.2.3
+        with:
+          platform: ${{ matrix.runs-on.platform }}
+          image-name: ghcr.io/${{ github.repository }}/k8s
+          dockerfile: Dockerfile
+          target: k8s
 
   merge:
     name: Merge
-    uses: specsnl/github-actions/.github/workflows/merge.yml@1.2.3
     needs: build
-    with:
-      runs-on: ubuntu-24.04
-      image-name: ghcr.io/${{ github.repository }}
+    runs-on: ubuntu-24.04
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Log in to the Container registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Create Manifest (ansible)
+        uses: specsnl/github-actions/create-manifest-for-target@1.2.3
+        with:
+          image-name: ghcr.io/${{ github.repository }}
+          target: ansible
+      - name: Create Manifest (k8s)
+        uses: specsnl/github-actions/create-manifest-for-target@1.2.3
+        with:
+          image-name: ghcr.io/${{ github.repository }}/k8s
+          target: k8s
