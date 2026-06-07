@@ -10,6 +10,8 @@ vars:
   HADOLINT_TAG_VERSION: v2.14.0
   # Latatest version of utils: https://github.com/specsnl/utils/pkgs/container/utils or https://github.com/specsnl/utils/releases
   UTILS_TAG_VERSION: 1.11.4
+  # Latest version of UV: https://github.com/astral-sh/uv/releases
+  UV_VERSION: "0.11.19"
 
 includes:
   scripts:
@@ -21,7 +23,7 @@ includes:
 
 tasks:
   build:
-    desc: Build and run new.Dockerfile
+    desc: Build both ansible and k8s images
     cmds:
       - docker build
         --tag {{.DOCKER_REPO}}/{{.DOCKER_OWNER}}/{{.DOCKER_IMAGE_NAME}}:latest
@@ -32,16 +34,10 @@ tasks:
         --target k8s
         .
 
-  requirements:
-    desc: Update requirements.txt file
+  deps:upgrade:
+    desc: Update uv.lock (upgrade all dependencies to their latest allowed versions)
     cmds:
-      - docker build
-        --tag {{.DOCKER_REPO}}/{{.DOCKER_OWNER}}/{{.DOCKER_IMAGE_NAME}}:requirements-latest
-        --file requirements.Dockerfile
-        --no-cache
-        .
-      - docker run --rm --tty {{.DOCKER_REPO}}/{{.DOCKER_OWNER}}/{{.DOCKER_IMAGE_NAME}}:requirements-latest > requirements.txt
-      - docker rmi {{.DOCKER_REPO}}/{{.DOCKER_OWNER}}/{{.DOCKER_IMAGE_NAME}}:requirements-latest
+      - uv lock --upgrade
 
   lint:
     desc: Apply a Dockerfile linter (https://github.com/hadolint/hadolint)
@@ -55,7 +51,7 @@ tasks:
         -
         < Dockerfile
 
-  a:shell:
+  shell:
     desc: Interactive shell with Ansible
     interactive: true
     cmds:
