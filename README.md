@@ -1,14 +1,14 @@
 # ansible
 
-[![Build Images](https://github.com/Ilyes512/ansible/workflows/main.yml/badge.svg)](https://github.com/Ilyes512/ansible/actions/workflows/main.yml)
+[![Build Images](https://github.com/specsnl/ansible/workflows/main.yml/badge.svg)](https://github.com/specsnl/ansible/actions/workflows/main.yml)
 
 Multiple Ansible images with different kind of tools ready for K8s interactions.
 
 ## Pulling the images
 
 ```
-docker pull ghcr.io/ilyes512/ansible:latest
-docker pull ghcr.io/ilyes512/ansible:k8s-latest
+docker pull ghcr.io/specsnl/ansible:latest
+docker pull ghcr.io/specsnl/ansible:k8s-latest
 ```
 
 ## Task commands
@@ -36,7 +36,7 @@ Available [Task](https://taskfile.dev/#/) commands:
 
 ```bash
 docker run --rm --tty --env KUBECONFIG_OVERRIDE="`kind get kubeconfig --internal`" \
-ghcr.io/ilyes512/ansible:k8s-latest kubectl get nodes
+ghcr.io/specsnl/ansible:k8s-latest kubectl get nodes
 ```
 
 Quote:

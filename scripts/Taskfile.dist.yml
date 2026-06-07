@@ -15,7 +15,7 @@ tasks:
              --rm
              --volume $(pwd)/..:/workdir
              --workdir /workdir
-             ghcr.io/ilyes512/utils:{{.UTILS_TAG_VERSION}}
+             ghcr.io/specsnl/utils:{{.UTILS_TAG_VERSION}}
              /bin/bash -c ./scripts/{{.RUN_SCRIPT}}
         ignore_error: true
 

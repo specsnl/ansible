@@ -1,4 +1,4 @@
-ARG DEBIAN_VERSION=13.2-slim
+ARG DEBIAN_VERSION=13.5-slim
 
 FROM debian:${DEBIAN_VERSION} AS builder
 
