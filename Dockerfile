@@ -9,7 +9,7 @@ FROM python:3.14.5-alpine3.23 AS ansible
 
 ENV HOME=/home
 
-WORKDIR /ansible
+WORKDIR /workspace
 
 COPY --from=uv /uv /usr/local/bin/uv
 
@@ -39,7 +39,7 @@ RUN apk add --no-cache --no-progress \
 
 COPY files/ansible /
 
-ENV PATH="/ansible/.venv/bin:$PATH"
+ENV PATH="/workspace/.venv/bin:$PATH"
 
 FROM ansible AS k8s
 

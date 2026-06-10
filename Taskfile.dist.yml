@@ -70,6 +70,6 @@ tasks:
         --tty
         --rm
         --user $(id -u):$(id -g)
-        --volume $(pwd):/ansible
-        --env ANSIBLE_CONFIG="/ansible/ansible"
+        --volume $(pwd):/workspace
+        --env ANSIBLE_CONFIG="/workspace/ansible"
         {{.DOCKER_REPO}}/{{.DOCKER_OWNER}}/{{.DOCKER_IMAGE_NAME}}:latest
