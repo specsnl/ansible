@@ -10,8 +10,8 @@ vars:
   HADOLINT_TAG_VERSION: v2.14.0
   # Latatest version of utils: https://github.com/specsnl/utils/pkgs/container/utils or https://github.com/specsnl/utils/releases
   UTILS_TAG_VERSION: 1.11.4
-  # Latest version of UV: https://github.com/astral-sh/uv/releases
-  UV_VERSION: "0.11.19"
+  # laest version of UV: https://hub.docker.com/r/astral/uv/tags
+  UV_TAG_VERSION: "0.11.20-python3.14-alpine3.23"
 
 includes:
   scripts:
@@ -47,7 +47,11 @@ tasks:
   deps:upgrade:
     desc: Update uv.lock (upgrade all dependencies to their latest allowed versions)
     cmds:
-      - uv lock --upgrade
+      - docker run --rm
+        --workdir /workspace
+        --volume $(pwd):/workspace
+        astral/uv:{{.UV_TAG_VERSION}}
+        uv lock --upgrade
 
   lint:
     desc: Apply a Dockerfile linter (https://github.com/hadolint/hadolint)
@@ -73,3 +77,4 @@ tasks:
         --volume $(pwd):/workspace
         --env ANSIBLE_CONFIG="/workspace/ansible"
         {{.DOCKER_REPO}}/{{.DOCKER_OWNER}}/{{.DOCKER_IMAGE_NAME}}:latest
+        /bin/bash
