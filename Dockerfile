@@ -34,8 +34,7 @@ RUN apk add --no-cache --no-progress \
         docker-cli \
     && chmod 777 -R "$HOME" \
     && seq 500 1999 | awk '{printf "user:x:%d:%d::/home:/sbin/nologin\n",$1,$1}' >> /etc/passwd \
-    && uv venv /opt/venv \
-    && uv sync --frozen --no-dev \
+    && UV_PROJECT_ENVIRONMENT=/opt/venv uv sync --frozen --no-dev \
     && rm pyproject.toml uv.lock
 
 COPY files/ansible /
