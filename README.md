@@ -25,7 +25,7 @@ Available [Task](https://taskfile.dev/#/) commands:
 
 ## Misc
 
-**Workdir**: `/ansible`
+**Workdir**: `/workspace`
 
 **Environment variables**:
 
