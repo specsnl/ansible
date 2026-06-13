@@ -8,8 +8,8 @@ vars:
   DOCKER_IMAGE_NAME: ansible
   # Latatest version of Hadolint: https://hub.docker.com/r/hadolint/hadolint/tags or https://github.com/hadolint/hadolint/releases
   HADOLINT_TAG_VERSION: "v2.14.0"
-  # Latatest version of utils: https://github.com/specsnl/utils/pkgs/container/utils or https://github.com/specsnl/utils/releases
-  UTILS_TAG_VERSION: 1.11.4
+  # Latatest version of utils: https://github.com/specsnl/utils/releases/latest
+  UTILS_TAG_VERSION: "1.12.0"
   # laest version of UV: https://hub.docker.com/r/astral/uv/tags
   UV_TAG_VERSION: "0.11.21-python3.14-alpine3.23"
 
