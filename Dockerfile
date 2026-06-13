@@ -5,7 +5,7 @@
 FROM ghcr.io/astral-sh/uv:0.11.19 AS uv
 
 # Latest version: https://hub.docker.com/_/python/tags?name=3.14.5-alpine
-FROM python:3.14.5-alpine3.23 AS ansible
+FROM python:3.15.0b2-alpine3.23 AS ansible
 
 ENV HOME=/home
 
