@@ -11,7 +11,7 @@ vars:
   # Latatest version of utils: https://github.com/specsnl/utils/pkgs/container/utils or https://github.com/specsnl/utils/releases
   UTILS_TAG_VERSION: 1.11.4
   # laest version of UV: https://hub.docker.com/r/astral/uv/tags
-  UV_TAG_VERSION: "0.11.20-python3.14-alpine3.23"
+  UV_TAG_VERSION: "0.11.21-python3.14-alpine3.23"
 
 includes:
   scripts:
