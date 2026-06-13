@@ -22,5 +22,7 @@ dependencies = [
     "ansible-lint",
     "yamllint",
     "molecule",
+    "molecule-plugins[docker]",
+    "antsibull-changelog",
     "ansible",
 ]

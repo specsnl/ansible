@@ -1,6 +1,6 @@
 # ansible
 
-[![Build Images](https://github.com/specsnl/ansible/workflows/main.yml/badge.svg)](https://github.com/specsnl/ansible/actions/workflows/main.yml)
+[![Main](https://github.com/specsnl/ansible/actions/workflows/main.yml/badge.svg)](https://github.com/specsnl/ansible/actions/workflows/main.yml)
 
 Multiple Ansible images with different kind of tools ready for K8s interactions.
 
