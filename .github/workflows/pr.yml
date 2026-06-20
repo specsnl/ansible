@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Hadolint
         uses: hadolint/hadolint-action@v3.3.0
 
@@ -37,7 +37,7 @@ jobs:
             platform: linux/arm64
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Log in to the Container registry
         uses: docker/login-action@v4
         if: ${{ github.actor != 'dependabot[bot]' }}
@@ -69,7 +69,7 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Log in to the Container registry
         uses: docker/login-action@v4
         with:
