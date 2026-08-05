@@ -53,6 +53,36 @@ tasks:
         astral/uv:{{.UV_TAG_VERSION}}
         uv lock --upgrade
 
+  deps:update:
+    desc: Update pyproject.toml (upgrade dependencies past their bounds and rewrite them)
+    cmds:
+      # SemVer dependencies: cap at the new major
+      - docker run --rm
+        --workdir /workspace
+        --volume $(pwd):/workspace
+        astral/uv:{{.UV_TAG_VERSION}}
+        uv add --no-sync --upgrade --bounds major
+        passlib
+        bcrypt
+        openshift
+        kubernetes-validate
+        dnspython
+        netaddr
+        hvac
+        docker
+        ansible
+      # CalVer tooling: floor only, capping on the major would expire every January
+      - docker run --rm
+        --workdir /workspace
+        --volume $(pwd):/workspace
+        astral/uv:{{.UV_TAG_VERSION}}
+        uv add --no-sync --upgrade --bounds lower
+        ansible-lint
+        yamllint
+        molecule
+        'molecule-plugins[docker]'
+        antsibull-changelog
+
   lint:
     desc: Apply a Dockerfile linter (https://github.com/hadolint/hadolint)
     cmds:

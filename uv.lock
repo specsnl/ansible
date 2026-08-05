@@ -180,20 +180,20 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ansible" },
-    { name = "ansible-lint" },
-    { name = "antsibull-changelog" },
-    { name = "bcrypt" },
-    { name = "dnspython" },
-    { name = "docker" },
-    { name = "hvac" },
-    { name = "kubernetes-validate" },
-    { name = "molecule" },
-    { name = "molecule-plugins", extras = ["docker"] },
-    { name = "netaddr" },
-    { name = "openshift" },
-    { name = "passlib" },
-    { name = "yamllint" },
+    { name = "ansible", specifier = ">=14.2.0,<15" },
+    { name = "ansible-lint", specifier = ">=26.6.0" },
+    { name = "antsibull-changelog", specifier = ">=0.35.1" },
+    { name = "bcrypt", specifier = ">=5.0.0,<6" },
+    { name = "dnspython", specifier = ">=2.8.0,<3" },
+    { name = "docker", specifier = ">=7.2.0,<8" },
+    { name = "hvac", specifier = ">=2.4.0,<3" },
+    { name = "kubernetes-validate", specifier = ">=1.36.0,<2" },
+    { name = "molecule", specifier = ">=26.6.0" },
+    { name = "molecule-plugins", extras = ["docker"], specifier = ">=26.7.15" },
+    { name = "netaddr", specifier = ">=1.3.0,<2" },
+    { name = "openshift", specifier = ">=0.13.2,<0.14" },
+    { name = "passlib", specifier = ">=1.7.4,<2" },
+    { name = "yamllint", specifier = ">=1.38.0" },
 ]
 
 [[package]]
