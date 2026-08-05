@@ -7,7 +7,7 @@ vars:
   DOCKER_OWNER: specsnl
   DOCKER_IMAGE_NAME: ansible
   # Latatest version of Hadolint: https://hub.docker.com/r/hadolint/hadolint/tags or https://github.com/hadolint/hadolint/releases
-  HADOLINT_TAG_VERSION: "v2.14.0"
+  HADOLINT_TAG_VERSION: "v2.15.1"
   # Latatest version of utils: https://github.com/specsnl/utils/releases/latest
   UTILS_TAG_VERSION: "1.12.0"
   # laest version of UV: https://hub.docker.com/r/astral/uv/tags
