@@ -10,8 +10,8 @@ vars:
   HADOLINT_TAG_VERSION: "v2.15.1"
   # Latatest version of utils: https://github.com/specsnl/utils/releases/latest
   UTILS_TAG_VERSION: "1.13.0"
-  # laest version of UV: https://hub.docker.com/r/astral/uv/tags
-  UV_TAG_VERSION: "0.12.2-python3.14-alpine3.23"
+  # laest version of UV: https://hub.docker.com/r/astral/uv/tags or https://github.com/astral-sh/uv/releases
+  UV_TAG_VERSION: "0.12.5-python3.14-alpine3.23"
 
 includes:
   scripts:
