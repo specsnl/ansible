@@ -44,6 +44,15 @@ tasks:
         --target k8s
         .
 
+  deps:audit:
+    desc: Audit the locked dependencies for known vulnerabilities (OSV)
+    cmds:
+      - docker run --rm
+        --workdir /workspace
+        --volume $(pwd):/workspace
+        astral/uv:{{.UV_TAG_VERSION}}
+        uv audit --preview-features audit-command --frozen
+
   deps:update:
     desc: Update uv.lock (update all dependencies to their latest allowed versions)
     cmds:

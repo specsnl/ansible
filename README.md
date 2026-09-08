@@ -21,6 +21,7 @@ Available [Task](https://taskfile.dev/#/) commands:
 * shell:                        Interactive shell with Ansible
 * build:ansible:                Build the ansible image
 * build:k8s:                    Build the k8s image
+* deps:audit:                   Audit the locked dependencies for known vulnerabilities (OSV)
 * deps:update:                  Update uv.lock (update all dependencies to their latest allowed versions)
 * deps:upgrade:                 Update pyproject.toml (upgrade dependencies past their bounds and rewrite them)
 * scripts:check-versions:       Check kubctl and kubectx versions
@@ -35,6 +36,8 @@ major, while CalVer tooling (`ansible-lint`, `yamllint`) only gets a lower bound
 - `task deps:update` — refresh `uv.lock` to the newest versions **within** the current constraints.
 - `task deps:upgrade` — rewrite the constraints in `pyproject.toml` to move **past** their current
   bounds (`uv.lock` is updated along with them).
+- `task deps:audit` — check the locked versions against the [OSV](https://osv.dev/) database for
+  known vulnerabilities.
 
 ## Misc
 
