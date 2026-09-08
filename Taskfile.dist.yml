@@ -44,8 +44,8 @@ tasks:
         --target k8s
         .
 
-  deps:upgrade:
-    desc: Update uv.lock (upgrade all dependencies to their latest allowed versions)
+  deps:update:
+    desc: Update uv.lock (update all dependencies to their latest allowed versions)
     cmds:
       - docker run --rm
         --workdir /workspace
@@ -53,7 +53,7 @@ tasks:
         astral/uv:{{.UV_TAG_VERSION}}
         uv lock --upgrade
 
-  deps:update:
+  deps:upgrade:
     desc: Update pyproject.toml (upgrade dependencies past their bounds and rewrite them)
     cmds:
       # SemVer dependencies: cap at the new major

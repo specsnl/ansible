@@ -3,7 +3,7 @@ name = "ansible-env"
 version = "0.1.0"
 requires-python = ">=3.14"
 # SemVer dependencies are capped at the current major, CalVer tooling gets a floor
-# only (its major is the year). Run `task deps:update` to refresh both.
+# only (its major is the year). Run `task deps:upgrade` to refresh both.
 dependencies = [
     # for better Ansible password_hash() support
     "passlib>=1.7.4,<2",
