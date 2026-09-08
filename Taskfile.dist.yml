@@ -9,9 +9,9 @@ vars:
   # Latatest version of Hadolint: https://hub.docker.com/r/hadolint/hadolint/tags or https://github.com/hadolint/hadolint/releases
   HADOLINT_TAG_VERSION: "v2.15.1"
   # Latatest version of utils: https://github.com/specsnl/utils/releases/latest
-  UTILS_TAG_VERSION: "1.13.0"
+  UTILS_TAG_VERSION: "1.14.0"
   # laest version of UV: https://hub.docker.com/r/astral/uv/tags or https://github.com/astral-sh/uv/releases
-  UV_TAG_VERSION: "0.12.5-python3.14-alpine3.23"
+  UV_TAG_VERSION: "0.12.10-python3.14-alpine3.23"
 
 includes:
   scripts:
@@ -44,8 +44,17 @@ tasks:
         --target k8s
         .
 
-  deps:upgrade:
-    desc: Update uv.lock (upgrade all dependencies to their latest allowed versions)
+  deps:audit:
+    desc: Audit the locked dependencies for known vulnerabilities (OSV)
+    cmds:
+      - docker run --rm
+        --workdir /workspace
+        --volume $(pwd):/workspace
+        astral/uv:{{.UV_TAG_VERSION}}
+        uv audit --preview-features audit-command --frozen
+
+  deps:update:
+    desc: Update uv.lock (update all dependencies to their latest allowed versions)
     cmds:
       - docker run --rm
         --workdir /workspace
@@ -53,7 +62,7 @@ tasks:
         astral/uv:{{.UV_TAG_VERSION}}
         uv lock --upgrade
 
-  deps:update:
+  deps:upgrade:
     desc: Update pyproject.toml (upgrade dependencies past their bounds and rewrite them)
     cmds:
       # SemVer dependencies: cap at the new major

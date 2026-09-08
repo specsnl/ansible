@@ -4,8 +4,8 @@
 # Latest version: https://github.com/astral-sh/uv/releases
 FROM ghcr.io/astral-sh/uv:0.12.10 AS uv
 
-# Latest version: https://hub.docker.com/_/python/tags?name=3.14.5-alpine
-FROM python:3.14.6-alpine3.24 AS ansible
+# Latest version: https://hub.docker.com/_/python/tags
+FROM python:3.14.7-alpine3.24 AS ansible
 
 ENV HOME=/home
 
