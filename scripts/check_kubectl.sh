@@ -12,9 +12,9 @@ DOCKER_ARG_CHECKSUM_AMD64="KUBECTL_SHA256_AMD64"
 DOCKER_ARG_CHECKSUM_ARM64="KUBECTL_SHA256_ARM64"
 NAME="kubectl"
 
-LATEST_VERSION=$(curl -fsSL "https://storage.googleapis.com/kubernetes-release/release/stable.txt")
-LATEST_CHECKSUM_AMD64=$(curl -fsSl "https://storage.googleapis.com/kubernetes-release/release/$LATEST_VERSION/bin/linux/amd64/kubectl.sha256")
-LATEST_CHECKSUM_ARM64=$(curl -fsSl "https://storage.googleapis.com/kubernetes-release/release/$LATEST_VERSION/bin/linux/arm64/kubectl.sha256")
+LATEST_VERSION=$(curl -fsSL "https://dl.k8s.io/release/stable.txt")
+LATEST_CHECKSUM_AMD64=$(curl -fsSl "https://dl.k8s.io/release/$LATEST_VERSION/bin/linux/amd64/kubectl.sha256")
+LATEST_CHECKSUM_ARM64=$(curl -fsSl "https://dl.k8s.io/release/$LATEST_VERSION/bin/linux/arm64/kubectl.sha256")
 
 CURRENT_VERSION=$(cat Dockerfile | sed -n "s/^ARG\s*${DOCKER_ARG_VERSION}\s*=\s*\(\S*\).*$/\1/p")
 CURRENT_CHECKSUM_AMD64=$(cat Dockerfile | sed -n "s/^ARG\s*${DOCKER_ARG_CHECKSUM_AMD64}\s*=\s*\(\S*\).*/\1/p")

@@ -45,7 +45,7 @@ FROM ansible AS k8s
 
 ARG TARGETARCH
 
-# Latest version of Kubectl at the moment: https://storage.googleapis.com/kubernetes-release/release/stable.txt
+# Latest version of Kubectl at the moment: https://dl.k8s.io/release/stable.txt
 ARG KUBECTL_VERSION=v1.31.0
 ARG KUBECTL_SHA256_AMD64=7c27adc64a84d1c0cc3dcf7bf4b6e916cc00f3f576a2dbac51b318d926032437
 ARG KUBECTL_SHA256_ARM64=f42832db7d77897514639c6df38214a6d8ae1262ee34943364ec1ffaee6c009c
@@ -69,7 +69,7 @@ RUN case "${TARGETARCH}" in \
         amd64) KUBECTX_ARCH=x86_64; KUBECTL_SHA256="${KUBECTL_SHA256_AMD64}"; KUBECTX_SHA256="${KUBECTX_SHA256_AMD64}"; KUBENS_SHA256="${KUBENS_SHA256_AMD64}"; HELM_SHA256="${HELM_SHA256_AMD64}" ;; \
         arm64) KUBECTX_ARCH=arm64;  KUBECTL_SHA256="${KUBECTL_SHA256_ARM64}"; KUBECTX_SHA256="${KUBECTX_SHA256_ARM64}"; KUBENS_SHA256="${KUBENS_SHA256_ARM64}"; HELM_SHA256="${HELM_SHA256_ARM64}" ;; \
     esac \
-    && curl -fsSLo /usr/local/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl" \
+    && curl -fsSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl" \
     && echo "${KUBECTL_SHA256} */usr/local/bin/kubectl" | sha256sum -c - \
     && chmod +x /usr/local/bin/kubectl \
     # get kubectx
