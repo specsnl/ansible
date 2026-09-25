@@ -2,7 +2,7 @@
 # check=error=true
 
 # Latest version: https://github.com/astral-sh/uv/releases
-FROM ghcr.io/astral-sh/uv:0.12.17 AS uv
+FROM ghcr.io/astral-sh/uv:0.12.19 AS uv
 
 # Latest version: https://hub.docker.com/_/python/tags
 FROM python:3.14.7-alpine3.24 AS ansible
