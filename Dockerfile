@@ -2,7 +2,7 @@
 # check=error=true
 
 # Latest version: https://github.com/astral-sh/uv/releases
-FROM ghcr.io/astral-sh/uv:0.12.17 AS uv
+FROM ghcr.io/astral-sh/uv:0.12.19 AS uv
 
 # Latest version: https://hub.docker.com/_/python/tags
 FROM python:3.14.7-alpine3.24 AS ansible
@@ -45,10 +45,10 @@ FROM ansible AS k8s
 
 ARG TARGETARCH
 
-# Latest version of Kubectl at the moment: https://storage.googleapis.com/kubernetes-release/release/stable.txt
-ARG KUBECTL_VERSION=v1.31.0
-ARG KUBECTL_SHA256_AMD64=7c27adc64a84d1c0cc3dcf7bf4b6e916cc00f3f576a2dbac51b318d926032437
-ARG KUBECTL_SHA256_ARM64=f42832db7d77897514639c6df38214a6d8ae1262ee34943364ec1ffaee6c009c
+# Latest version of Kubectl at the moment: https://dl.k8s.io/release/stable.txt
+ARG KUBECTL_VERSION=v1.37.1
+ARG KUBECTL_SHA256_AMD64=65691ff77eb6fa44c908b77a1082c9f092c3b9733b5cefabec0d1104890e21a8
+ARG KUBECTL_SHA256_ARM64=ff749f4b78d9c4f1ec87307df9b50119ed819e2094aa9810cb9acffc3286c8c7
 
 # Latest version of kubectx/kubens at the moment: https://api.github.com/repos/ahmetb/kubectx/releases/latest
 ARG KUBECTX_VERSION=v0.11.0
@@ -58,9 +58,9 @@ ARG KUBENS_SHA256_AMD64=326c021c7b35468ed9a187b361198d0f22ae32828139c65eb6670c0d
 ARG KUBENS_SHA256_ARM64=37058abe82ef20c93b44f3dc8ca2382dbb95d416cec958fbf7b8f79f011be86c
 
 # Latest version of Helm at the moment: https://api.github.com/repos/helm/helm/releases/latest
-ARG HELM_VERSION=v4.2.4
-ARG HELM_SHA256_AMD64=c306b46f719b0a4da32d0f78ee21bf90ce8d602f15b22ab753f0674d1670a7f3
-ARG HELM_SHA256_ARM64=564de2191b881e9f71b5606b25345821ea1682f06ab90499d3ab22b530176da1
+ARG HELM_VERSION=v4.3.0
+ARG HELM_SHA256_AMD64=86584a54def73570558f66f5111cc53dfed56689637ae32c1201205d494f54fb
+ARG HELM_SHA256_ARM64=31c5794dd55c66a51e6b7d2e2ac7a114ae8b1de41ff1d9ba51748ac973b06a08
 
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
@@ -69,7 +69,7 @@ RUN case "${TARGETARCH}" in \
         amd64) KUBECTX_ARCH=x86_64; KUBECTL_SHA256="${KUBECTL_SHA256_AMD64}"; KUBECTX_SHA256="${KUBECTX_SHA256_AMD64}"; KUBENS_SHA256="${KUBENS_SHA256_AMD64}"; HELM_SHA256="${HELM_SHA256_AMD64}" ;; \
         arm64) KUBECTX_ARCH=arm64;  KUBECTL_SHA256="${KUBECTL_SHA256_ARM64}"; KUBECTX_SHA256="${KUBECTX_SHA256_ARM64}"; KUBENS_SHA256="${KUBENS_SHA256_ARM64}"; HELM_SHA256="${HELM_SHA256_ARM64}" ;; \
     esac \
-    && curl -fsSLo /usr/local/bin/kubectl "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl" \
+    && curl -fsSLo /usr/local/bin/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl" \
     && echo "${KUBECTL_SHA256} */usr/local/bin/kubectl" | sha256sum -c - \
     && chmod +x /usr/local/bin/kubectl \
     # get kubectx
