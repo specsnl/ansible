@@ -26,5 +26,5 @@ dependencies = [
     "molecule>=26.6.0",
     "molecule-plugins[docker]>=26.7.15",
     "antsibull-changelog>=0.35.1",
-    "ansible>=14.2.0,<15",
+    "ansible>=14.4.0,<15",
 ]
