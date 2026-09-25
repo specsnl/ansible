@@ -46,9 +46,9 @@ FROM ansible AS k8s
 ARG TARGETARCH
 
 # Latest version of Kubectl at the moment: https://dl.k8s.io/release/stable.txt
-ARG KUBECTL_VERSION=v1.31.0
-ARG KUBECTL_SHA256_AMD64=7c27adc64a84d1c0cc3dcf7bf4b6e916cc00f3f576a2dbac51b318d926032437
-ARG KUBECTL_SHA256_ARM64=f42832db7d77897514639c6df38214a6d8ae1262ee34943364ec1ffaee6c009c
+ARG KUBECTL_VERSION=v1.37.1
+ARG KUBECTL_SHA256_AMD64=65691ff77eb6fa44c908b77a1082c9f092c3b9733b5cefabec0d1104890e21a8
+ARG KUBECTL_SHA256_ARM64=ff749f4b78d9c4f1ec87307df9b50119ed819e2094aa9810cb9acffc3286c8c7
 
 # Latest version of kubectx/kubens at the moment: https://api.github.com/repos/ahmetb/kubectx/releases/latest
 ARG KUBECTX_VERSION=v0.11.0
