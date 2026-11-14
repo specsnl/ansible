@@ -13,7 +13,7 @@ dependencies = [
     # needed for Ansible k8s module's validate support
     "kubernetes-validate>=1.36.0,<2",
     # needed for Ansible dns lookup support
-    "dnspython>=2.8.0,<3",
+    "dnspython>=2.9.2,<3",
     # needed for Ansible ipaddr functions
     "netaddr>=1.3.0,<2",
     # needed for Ansible hashi_vault plugin support
