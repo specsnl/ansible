@@ -19,7 +19,7 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 RUN apk add --no-cache --no-progress \
         bash~=5.3 \
-        curl~=8.22 \
+        curl~=8.23 \
         openssl~=3.5 \
         git~=2.54 \
         openssh-client-default~=10.3 \
@@ -30,7 +30,7 @@ RUN apk add --no-cache --no-progress \
         sshpass~=1.10 \
         sudo~=1.9 \
         unzip~=6.0 \
-        docker-cli~=29.8 \
+        docker-cli~=29.9 \
         sops~=3.12 \
     && chmod 777 -R "$HOME" \
     && seq 500 1999 | awk '{printf "user:x:%d:%d::/home:/sbin/nologin\n",$1,$1}' >> /etc/passwd \
