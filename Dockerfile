@@ -2,10 +2,10 @@
 # check=error=true
 
 # Latest version: https://github.com/astral-sh/uv/releases
-FROM ghcr.io/astral-sh/uv:0.13.1-python3.15-alpine3.23 AS uv
+FROM ghcr.io/astral-sh/uv:0.13.8-python3.15-alpine3.23 AS uv
 
 # Latest version: https://hub.docker.com/_/python/tags
-FROM python:3.14.7-alpine3.24 AS ansible
+FROM python:3.14.10-alpine3.24 AS ansible
 
 ENV HOME=/home
 
@@ -19,7 +19,7 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 RUN apk add --no-cache --no-progress \
         bash~=5.3 \
-        curl~=8.22 \
+        curl~=8.23 \
         openssl~=3.5 \
         git~=2.54 \
         openssh-client-default~=10.3 \
@@ -30,7 +30,7 @@ RUN apk add --no-cache --no-progress \
         sshpass~=1.10 \
         sudo~=1.9 \
         unzip~=6.0 \
-        docker-cli~=29.8 \
+        docker-cli~=29.9 \
         sops~=3.12 \
     && chmod 777 -R "$HOME" \
     && seq 500 1999 | awk '{printf "user:x:%d:%d::/home:/sbin/nologin\n",$1,$1}' >> /etc/passwd \
@@ -49,9 +49,9 @@ FROM ansible AS k8s
 ARG TARGETARCH
 
 # Latest version of Kubectl at the moment: https://dl.k8s.io/release/stable.txt
-ARG KUBECTL_VERSION=v1.37.1
-ARG KUBECTL_SHA256_AMD64=65691ff77eb6fa44c908b77a1082c9f092c3b9733b5cefabec0d1104890e21a8
-ARG KUBECTL_SHA256_ARM64=ff749f4b78d9c4f1ec87307df9b50119ed819e2094aa9810cb9acffc3286c8c7
+ARG KUBECTL_VERSION=v1.37.2
+ARG KUBECTL_SHA256_AMD64=c04487523e7aa7d1493f7808174c899db93d7a9cf57531420cd76b9bd415f8f4
+ARG KUBECTL_SHA256_ARM64=fcc16f63186659d9722014b7e02d5fdd2d4e669cb8c0ab66365d7d3b8ba03509
 
 # Latest version of kubectx/kubens at the moment: https://api.github.com/repos/ahmetb/kubectx/releases/latest
 ARG KUBECTX_VERSION=v0.11.0
@@ -61,9 +61,9 @@ ARG KUBENS_SHA256_AMD64=326c021c7b35468ed9a187b361198d0f22ae32828139c65eb6670c0d
 ARG KUBENS_SHA256_ARM64=37058abe82ef20c93b44f3dc8ca2382dbb95d416cec958fbf7b8f79f011be86c
 
 # Latest version of Helm at the moment: https://api.github.com/repos/helm/helm/releases/latest
-ARG HELM_VERSION=v4.3.0
-ARG HELM_SHA256_AMD64=86584a54def73570558f66f5111cc53dfed56689637ae32c1201205d494f54fb
-ARG HELM_SHA256_ARM64=31c5794dd55c66a51e6b7d2e2ac7a114ae8b1de41ff1d9ba51748ac973b06a08
+ARG HELM_VERSION=v4.3.2
+ARG HELM_SHA256_AMD64=d1c0278d46beab79582d7e50f5b3dc206944ba8e577cde618513fd07daa53983
+ARG HELM_SHA256_ARM64=df31cb61680ef728f82c770e5280dd565617bee6b039d37e85c677288be4bbb0
 
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
